@@ -1,0 +1,38 @@
+/* Fondo navideño */
+body {
+  background-image: url('../assets/snow-bg.jpg'); /* opcional */
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/* Banner navideño */
+#christmas-banner {
+  position: fixed;       /* siempre visible */
+  top: 0;                /* arriba de la página */
+  left: 0;
+  width: 100%;
+  background: linear-gradient(90deg, red, green);
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  z-index: 10000;        /* encima de todo */
+}
+
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  font-size: 1em;
+  z-index: 9999;
+  pointer-events: none;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
