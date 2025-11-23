@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WZCKTJRS7V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WZCKTJRS7V');
+    </script>
+    <!-- Fin Google Analytics -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CYBERNETIX | Digital Connectivity & Defense</title>
@@ -25,7 +35,7 @@
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#portafolio">Portafolio</a></li> <!-- NUEVO -->
+                <li><a href="#portafolio">Portafolio</a></li>
                 <li><a href="#nosotros">Nosotros</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
@@ -142,7 +152,7 @@
         </div>
     </section>
 
-    <!-- NUEVA SECCIÓN: PORTAFOLIO -->
+    <!-- PORTAFOLIO -->
     <section class="portafolio" id="portafolio">
         <div class="container">
             <h2 class="section-title">Portafolio</h2>
@@ -185,7 +195,7 @@
         </div>
     </section>
 
-    <!-- Nosotros -->
+    <!-- NOSOTROS -->
     <section class="nosotros" id="nosotros">
         <div class="container">
             <div class="nosotros-content">
@@ -222,7 +232,7 @@
         </div>
     </section>
 
-    <!-- Contacto -->
+    <!-- CONTACTO -->
     <section class="contacto" id="contacto">
         <div class="container">
             <h2 class="section-title">Contáctanos</h2>
@@ -312,6 +322,7 @@
                <div class="footer-social">
                 <h4>Síguenos</h4>
                 <div class="social-icons">
+
                     <!-- Facebook -->
                     <a href="https://www.facebook.com/profile.php?id=61583621801309" target="_blank" aria-label="Facebook">
                     <i class="fab fa-facebook"></i>
@@ -323,8 +334,11 @@
                     </a>
 
                     <!-- WhatsApp -->
-                    <a href="https://wa.me/524443002373" target="_blank" aria-label="WhatsApp">
-                    <i class="fab fa-whatsapp"></i>
+                    <a href="https://wa.me/524443002373"
+                       id="btn-whatsapp"
+                       target="_blank"
+                       aria-label="WhatsApp">
+                       <i class="fab fa-whatsapp"></i>
                     </a>
                 </div>
                 </div>
@@ -337,7 +351,105 @@
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
+<!-- EVENTOS GA4 -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // ================================
+    // 1) CLICK EN WHATSAPP
+    // ================================
+    const whatsappBtn = document.getElementById('btn-whatsapp');
+    if (whatsappBtn) {
+        whatsappBtn.addEventListener('click', () => {
+            if (typeof gtag === "function") {
+                gtag('event', 'whatsapp_click', {
+                    event_category: 'conversion',
+                    event_label: 'WhatsApp Lead'
+                });
+            }
+        });
+    }
+
+    // ================================
+    // 2) ENVÍO DE FORMULARIO
+    // ================================
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', () => {
+            if (typeof gtag === "function") {
+                gtag('event', 'form_submit', {
+                    event_category: 'conversion',
+                    event_label: 'Formulario Contacto'
+                });
+            }
+        });
+    }
+
+    // ================================
+    // 3) SCROLL AL 90%
+    // ================================
+    let scrollTracked = false;
+    window.addEventListener("scroll", () => {
+        if (!scrollTracked) {
+            const scrollPos = window.scrollY + window.innerHeight;
+            const docHeight = document.body.scrollHeight;
+
+            if (scrollPos >= docHeight * 0.9) {
+                scrollTracked = true;
+
+                if (typeof gtag === "function") {
+                    gtag('event', 'scroll_depth', {
+                        event_category: 'engagement',
+                        event_label: 'scroll_90'
+                    });
+                }
+            }
+        }
+    });
+
+    // ================================
+    // 4) EVENTOS DE CTA
+    // ================================
+    document.querySelectorAll('.btn, .btn-primary, .btn-secondary').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (typeof gtag === "function") {
+                gtag('event', 'generate_lead', {
+                    event_category: 'CTA',
+                    event_label: btn.innerText.trim()
+                });
+            }
+        });
+    });
+
+    // ================================
+    // 5) PAGE VIEW PERSONALIZADA
+    // ================================
+    if (typeof gtag === "function") {
+        gtag('event', 'page_view_custom', {
+            page_title: document.title,
+            page_path: window.location.pathname
+        });
+    }
+
+    // ================================
+    // 6) CLIC EN REDES SOCIALES
+    // ================================
+    document.querySelectorAll('.footer-social a, .social-icons a').forEach(icon => {
+        icon.addEventListener('click', () => {
+            if (typeof gtag === "function") {
+                gtag('event', 'social_click', {
+                    event_category: 'engagement',
+                    event_label: icon.getAttribute('aria-label') || 'red_social'
+                });
+            }
+        });
+    });
+
+});
+</script>
+
+<!-- TU SCRIPT PRINCIPAL -->
+<script src="js/script.js"></script>
 
 </body>
 </html>

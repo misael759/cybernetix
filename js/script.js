@@ -220,3 +220,66 @@ document.getElementById('telefono').addEventListener('input', function() {
 
 console.log('🚀 CYBERNETIX - Digital Connectivity & Defense');
 console.log('💻 Website loaded successfully!');
+
+// =======================================================
+// ================== GOOGLE ANALYTICS ===================
+// =======================================================
+
+// ----- Envío del formulario -----
+document.getElementById("contactForm").addEventListener("submit", function () {
+    if (typeof gtag === "function") {
+        gtag('event', 'contact_form_submit', {
+            event_category: 'engagement',
+            event_label: 'formulario_contacto',
+            value: 1
+        });
+    }
+});
+
+// ----- Click en WhatsApp (cualquier botón del sitio) -----
+document.querySelectorAll('a[href*="wa.me"]').forEach(function (btn) {
+    btn.addEventListener("click", function () {
+        if (typeof gtag === "function") {
+            gtag('event', 'whatsapp_click', {
+                event_category: 'contact',
+                event_label: 'whatsapp',
+                value: 1
+            });
+        }
+    });
+});
+
+// ----- Redes sociales (Facebook e Instagram) -----
+document.querySelectorAll('.footer-social a').forEach(function (btn) {
+    btn.addEventListener("click", function () {
+        const red = this.getAttribute("aria-label") || "unknown";
+        if (typeof gtag === "function") {
+            gtag('event', 'social_click', {
+                event_category: 'social',
+                event_label: red,
+                value: 1
+            });
+        }
+    });
+});
+
+// ----- Scroll 90% -----
+let scroll90 = false;
+
+window.addEventListener("scroll", function () {
+    if (!scroll90) {
+        const scrolled = (window.innerHeight + window.scrollY) / document.body.offsetHeight;
+
+        if (scrolled > 0.90) {
+            scroll90 = true;
+
+            if (typeof gtag === "function") {
+                gtag('event', 'scroll_90', {
+                    event_category: 'engagement',
+                    event_label: 'scroll_depth',
+                    value: 1
+                });
+            }
+        }
+    }
+});
